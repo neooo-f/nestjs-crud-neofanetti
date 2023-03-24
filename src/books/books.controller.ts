@@ -14,26 +14,31 @@ import { Book } from '@prisma/client';
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
+  // Gets all Books
   @Get()
   async getAllBooks(): Promise<Book[]> {
     return this.booksService.getAllBooks();
   }
 
+  // Get one specific Book by his id
   @Get(':id')
   async getBook(@Param('id') id: number): Promise<Book | null> {
     return this.booksService.getBook(id);
   }
 
+  // Creates a new Book
   @Post()
   async createBook(@Body() postData: Book): Promise<Book> {
     return this.booksService.createBook(postData);
   }
 
+  // Updates an existing Book by his id
   @Put(':id')
-  async updateBook(@Param('id') id: number): Promise<Book> {
-    return this.booksService.updateBook(id);
+  async updateBook(@Param('id') id: number, @Body() book: Book): Promise<Book> {
+    return this.booksService.updateBook(id, book);
   }
 
+  // Deletes a Book by his id
   @Delete(':id')
   async deleteBook(@Param('id') id: number): Promise<Book> {
     return this.booksService.deleteBook(id);

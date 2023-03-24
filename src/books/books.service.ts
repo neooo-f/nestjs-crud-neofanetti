@@ -18,12 +18,10 @@ export class BooksService {
     return this.prisma.book.create({ data });
   }
 
-  async updateBook(id: number): Promise<Book> {
+  async updateBook(id: number, book: Book): Promise<Book> {
     return this.prisma.book.update({
       where: { id: Number(id) },
-      data: {
-        /* na kei plan */
-      },
+      data: book,
     });
   }
 
