@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Book } from '@prisma/client';
+import { CreateBookDto } from './validation/create-book.dto';
 
 @Injectable()
 export class BooksService {
@@ -14,7 +15,7 @@ export class BooksService {
     return this.prisma.book.findUnique({ where: { id: Number(id) } });
   }
 
-  async createBook(data: Book): Promise<Book> {
+  async createBook(data: CreateBookDto): Promise<Book> {
     return this.prisma.book.create({ data });
   }
 

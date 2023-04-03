@@ -16,3 +16,18 @@ model Book {
   publishingYear String
   author         String
 }
+
+model User {
+  id        Int    @id @default(autoincrement())
+  username  String @unique
+  password  String 
+  name      String
+  firstName String
+  age       Int
+  gender    Gender
+}
+
+enum Gender {
+  Male
+  Female
+}

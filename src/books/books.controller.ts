@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { Book } from '@prisma/client';
+import { CreateBookDto } from './validation/create-book.dto';
 
 @Controller('books')
 export class BooksController {
@@ -28,7 +29,7 @@ export class BooksController {
 
   // Creates a new Book
   @Post()
-  async createBook(@Body() postData: Book): Promise<Book> {
+  async createBook(@Body() postData: CreateBookDto): Promise<Book> {
     return this.booksService.createBook(postData);
   }
 
