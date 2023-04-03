@@ -14,7 +14,9 @@ import { AppService } from './app.service';
     AuthModule,
     UsersModule,
     PrismaModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   providers: [AppService],
 })

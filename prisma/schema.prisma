@@ -11,16 +11,24 @@ datasource db {
 }
 
 model Book {
-  id             Int    @id @default(autoincrement())
+  id             String  @id @default(uuid())
   title          String
-  publishingYear String
-  author         String
+  publishingYear Int
+  authorId       String
+  author         Author? @relation(fields: [authorId], references: [id])
+}
+
+model Author {
+  id        String @id @default(uuid())
+  firstName String
+  name      String
+  books     Book[]
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
+  id        String @id @default(uuid())
   username  String @unique
-  password  String 
+  password  String
   name      String
   firstName String
   age       Int
