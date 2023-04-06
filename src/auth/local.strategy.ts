@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ContextIdFactory, ModuleRef } from '@nestjs/core';
+import { User } from '@prisma/client';
 import { resolve } from 'path';
 
 @Injectable()
@@ -17,7 +18,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     request: Request,
     username: string,
     password: string,
-  ): Promise<any> {
+  ): Promise<Partial<User>> {
     const contextId = ContextIdFactory.getByRequest(request);
     this.authService = await this.moduleRef.resolve(AuthService, contextId);
 

@@ -11,24 +11,24 @@ export class BooksService {
     return this.prisma.book.findMany();
   }
 
-  async getBook(id: number): Promise<Book | null> {
-    return this.prisma.book.findUnique({ where: { id: Number(id) } });
+  async getBook(id: string): Promise<Book | null> {
+    return this.prisma.book.findUnique({ where: { id: String(id) } });
   }
 
   async createBook(data: CreateBookDto): Promise<Book> {
     return this.prisma.book.create({ data });
   }
 
-  async updateBook(id: number, book: Book): Promise<Book> {
+  async updateBook(id: string, book: Book): Promise<Book> {
     return this.prisma.book.update({
-      where: { id: Number(id) },
+      where: { id: String(id) },
       data: book,
     });
   }
 
-  async deleteBook(id: number): Promise<Book> {
+  async deleteBook(id: string): Promise<Book> {
     return this.prisma.book.delete({
-      where: { id: Number(id) },
+      where: { id: String(id) },
     });
   }
 }

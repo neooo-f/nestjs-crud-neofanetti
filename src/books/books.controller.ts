@@ -23,7 +23,7 @@ export class BooksController {
 
   // Get one specific Book by his id
   @Get(':id')
-  async getBook(@Param('id') id: number): Promise<Book | null> {
+  async getBook(@Param('id') id: string): Promise<Book | null> {
     return this.booksService.getBook(id);
   }
 
@@ -35,13 +35,13 @@ export class BooksController {
 
   // Updates an existing Book by his id
   @Put(':id')
-  async updateBook(@Param('id') id: number, @Body() book: Book): Promise<Book> {
+  async updateBook(@Param('id') id: string, @Body() book: Book): Promise<Book> {
     return this.booksService.updateBook(id, book);
   }
 
   // Deletes a Book by his id
   @Delete(':id')
-  async deleteBook(@Param('id') id: number): Promise<Book> {
+  async deleteBook(@Param('id') id: string): Promise<Book> {
     return this.booksService.deleteBook(id);
   }
 }
