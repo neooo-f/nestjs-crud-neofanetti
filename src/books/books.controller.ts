@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { Book } from '@prisma/client';
-import { CreateBookDto } from './validation/create-book.dto';
+import { CreateBookDto } from '../dto/create-book.dto';
 
 @Controller('books')
 export class BooksController {
