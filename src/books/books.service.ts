@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Book } from '@prisma/client';
+import { Book, User } from '@prisma/client';
 import { CreateBookDto } from '../dto/create-book.dto';
 
 @Injectable()
@@ -10,20 +10,29 @@ export class BooksService {
   async getAllBooks(): Promise<Book[]> {
     return this.prisma.book.findMany({
       include: {
-        author: true,
+        user: true,
       },
     });
   }
 
-  async getBook(id: string): Promise<Book | null> {
-    return this.prisma.book.findUnique({
-      where: { id: String(id) },
-      include: { author: true },
+  async getMyBooks(user: User): Promise<Book[] | null> {
+    return this.prisma.book.findMany({
+      where: { authorId: String(user.id) },
+      //include: { user: true },
     });
   }
 
-  async createBook(data: CreateBookDto): Promise<Book> {
-    return this.prisma.book.create({ data });
+  async getBook(id: string): Promise<(Book & { user: User }) | null> {
+    return this.prisma.book.findUnique({
+      where: { id: String(id) },
+      include: { user: true },
+    });
+  }
+
+  async createBook(data: CreateBookDto, authorId: User['id']): Promise<Book> {
+    return this.prisma.book.create({
+      data: { ...data, authorId },
+    });
   }
 
   async updateBook(id: string, book: Book): Promise<Book> {

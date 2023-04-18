@@ -1,4 +1,4 @@
-import { IsUUID, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateBookDto {
   @IsNotEmpty()
@@ -8,8 +8,4 @@ export class CreateBookDto {
   @IsNotEmpty()
   @IsNumber()
   publishingYear: number;
-
-  @IsNotEmpty()
-  @IsUUID()
-  authorId: string;
 }

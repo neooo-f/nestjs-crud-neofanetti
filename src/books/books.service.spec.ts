@@ -24,8 +24,7 @@ describe('BooksService', () => {
     it(`should create a new Book`, async function () {
       const mockedBook = {
         title: 'Jim Knopfs Abenteuer',
-        publishingYear: '2005',
-        author: 'Peter Graber',
+        publishingYear: '2005'
       };
 
       this.prismaService.book.create.mockResolvedValue(mockedBook);

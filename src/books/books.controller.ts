@@ -6,41 +6,52 @@ import {
   Delete,
   Param,
   Body,
+  UseInterceptors,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
-import { Book } from '@prisma/client';
+import { Book, User } from '@prisma/client';
 import { CreateBookDto } from '../dto/create-book.dto';
+import { CurrentUser } from '../decorators/current-user.decorator';
+import { IsAuthorInterceptor } from '../interceptors/is-author.interceptor';
 
 @Controller('books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
-  // Gets all Books
   @Get()
   async getAllBooks(): Promise<Book[]> {
     return this.booksService.getAllBooks();
   }
 
-  // Get one specific Book by his id
+  @Get('my')
+  async getMyBooks(@CurrentUser() user: User): Promise<Book[]> {
+    return this.booksService.getMyBooks(user);
+  }
+
   @Get(':id')
-  async getBook(@Param('id') id: string): Promise<Book | null> {
+  @UseInterceptors(IsAuthorInterceptor)
+  async getBook(
+    @Param('id') id: string,
+  ): Promise<(Book & { user: User }) | null> {
     return this.booksService.getBook(id);
   }
 
-  // Creates a new Book
   @Post()
-  async createBook(@Body() postData: CreateBookDto): Promise<Book> {
-    return this.booksService.createBook(postData);
+  async createBook(
+    @Body() postData: CreateBookDto,
+    @CurrentUser() user: User,
+  ): Promise<Book> {
+    return this.booksService.createBook(postData, user.id);
   }
 
-  // Updates an existing Book by his id
   @Put(':id')
+  @UseInterceptors(IsAuthorInterceptor)
   async updateBook(@Param('id') id: string, @Body() book: Book): Promise<Book> {
     return this.booksService.updateBook(id, book);
   }
 
-  // Deletes a Book by his id
   @Delete(':id')
+  @UseInterceptors(IsAuthorInterceptor)
   async deleteBook(@Param('id') id: string): Promise<Book> {
     return this.booksService.deleteBook(id);
   }

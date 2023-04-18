@@ -15,14 +15,7 @@ model Book {
   title          String
   publishingYear Int
   authorId       String
-  author         Author @relation(fields: [authorId], references: [id])
-}
-
-model Author {
-  id        String @id @default(uuid())
-  firstName String
-  name      String
-  books     Book[]
+  user           User   @relation(fields: [authorId], references: [id])
 }
 
 model User {
@@ -33,6 +26,7 @@ model User {
   firstName String
   age       Int
   gender    Gender
+  books     Book[]
 }
 
 enum Gender {
