@@ -37,7 +37,10 @@ export class UsersController {
   }
 
   @Put('auth/edit')
-  async edit(@Body() postData: CreateUserDto, @CurrentUser() user: User): Promise<User> {
+  async edit(
+    @Body() postData: CreateUserDto,
+    @CurrentUser() user: User,
+  ): Promise<User> {
     return this.usersService.updateUser(user.id, postData);
   }
 
